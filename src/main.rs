@@ -31,5 +31,8 @@ fn main() {
     }
     let write_file = File::create("adblock.list").unwrap();
     let mut writer = BufWriter::new(&write_file);
-    let _ = write!(&mut writer, "{}", dnsmasq_addrs);
+    match write!(&mut writer, "{}", dnsmasq_addrs) {
+        Ok(_) => {},
+        Err(e) => println!("{}", e),
+    };
 }
