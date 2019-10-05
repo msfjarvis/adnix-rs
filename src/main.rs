@@ -2,7 +2,6 @@ extern crate reqwest;
 
 mod source;
 
-use source::Download;
 use source::Source;
 use std::fs::File;
 use std::io::{BufWriter, Write};
