@@ -6,6 +6,8 @@ use source::Source;
 use std::fs::File;
 use std::io::{BufWriter, Write};
 
+const LOCALHOST_ADDRS: &'static [&'static str] = &["0.0.0.0", "127.0.0.1"];
+
 fn main() {
     let sources = vec![Source {
         name: String::from("Harsh Shandilya's hosts list"),
@@ -22,7 +24,7 @@ fn main() {
             continue;
         }
         for section in line.split_whitespace() {
-            if section == "0.0.0.0" || section == "127.0.0.1" {
+            if LOCALHOST_ADDRS.contains(&section) {
                 continue;
             }
             dnsmasq_addrs.push_str(format!("server=/{}/\n", section).as_str())
