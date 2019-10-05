@@ -1,33 +1,35 @@
 extern crate reqwest;
+extern crate regex;
 
 mod source;
 
+use regex::Regex;
 use source::Source;
 use std::fs::File;
 use std::io::{BufWriter, Write};
 
-const LOCALHOST_ADDRS: &'static [&'static str] = &["0.0.0.0", "127.0.0.1"];
+// I don't fully understand this and would appreciate help :)
+const LOCALHOST_ADDRS: &'static [&'static str] = &["localhost", "local", "localhost.localdomain", "broadcasthost"];
 
 fn main() {
     let sources = vec![Source {
         name: String::from("Harsh Shandilya's hosts list"),
         url: String::from("https://download.msfjarvis.website/adblock/hosts"),
     }];
+    let re = Regex::new(r"^\s*(\d+\.\d+\.\d+\.\d+)\s+([\w\-\.]+)").unwrap();
     let mut hosts = String::new();
     let mut dnsmasq_addrs = String::new();
     for source in sources {
         hosts.push_str(source.download_to_string().unwrap().as_str());
     }
     for line in hosts.lines() {
-        let next = line.chars().next();
-        if next == None || next.unwrap() == '#' {
+        if !re.is_match(line) {
             continue;
         }
-        for section in line.split_whitespace() {
-            if LOCALHOST_ADDRS.contains(&section) {
-                continue;
+        for cap in re.captures_iter(line) {
+            if !LOCALHOST_ADDRS.contains(&&cap[2]) {
+                dnsmasq_addrs.push_str(format!("server=/{}/\n", &cap[2]).as_str())
             }
-            dnsmasq_addrs.push_str(format!("server=/{}/\n", section).as_str())
         }
     }
     let write_file = File::create("adblock.list").unwrap();

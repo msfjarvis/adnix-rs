@@ -9,3 +9,4 @@ edition = "2018"
 [dependencies]
 clap = "2.33.0"
 reqwest = "0.9.20"
+regex = "1.3.1"
