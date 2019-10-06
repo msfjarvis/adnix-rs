@@ -9,7 +9,7 @@ use std::fs::File;
 use std::io::{BufWriter, Write};
 
 // I don't fully understand this and would appreciate help :)
-const LOCALHOST_ADDRS: &'static [&'static str] = &[
+const LOCALHOST_ADDRS: &[&str] = &[
     "localhost",
     "local",
     "localhost.localdomain",

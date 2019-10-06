@@ -8,6 +8,6 @@ pub struct Source {
 impl Source {
     pub fn download_to_string(&self) -> Result<String, Box<dyn Error>> {
         let req = reqwest::get(self.url.as_str())?.text()?;
-        return Ok(req);
+        Ok(req)
     }
 }
