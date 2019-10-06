@@ -1,5 +1,5 @@
-extern crate reqwest;
 extern crate regex;
+extern crate reqwest;
 
 mod source;
 
@@ -9,7 +9,12 @@ use std::fs::File;
 use std::io::{BufWriter, Write};
 
 // I don't fully understand this and would appreciate help :)
-const LOCALHOST_ADDRS: &'static [&'static str] = &["localhost", "local", "localhost.localdomain", "broadcasthost"];
+const LOCALHOST_ADDRS: &'static [&'static str] = &[
+    "localhost",
+    "local",
+    "localhost.localdomain",
+    "broadcasthost",
+];
 
 fn main() {
     let sources = vec![Source {
@@ -35,7 +40,7 @@ fn main() {
     let write_file = File::create("adblock.list").unwrap();
     let mut writer = BufWriter::new(&write_file);
     match write!(&mut writer, "{}", dnsmasq_addrs) {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(e) => println!("{}", e),
     };
 }
