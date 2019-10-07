@@ -16,7 +16,7 @@ fn main() {
     let mut contents = String::new();
     let mut writer = BufWriter::new(&write_file);
     for source in sources {
-        contents.push_str(source.format_to_dnsmasq_server().join("\n").as_str())
+        contents.push_str(source.format_to_dnsmasq().join("\n").as_str())
     }
     match write!(&mut writer, "{}", contents) {
         Ok(_) => {}
