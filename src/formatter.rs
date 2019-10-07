@@ -10,6 +10,8 @@ pub trait Formatter {
         "broadcasthost",
     ];
     const REGEX_PATTERN: &'static str = r"^\s*(\d+\.\d+\.\d+\.\d+)\s+([\w\-\.]+)";
+    const IPV4: &'static str = "127.0.0.1";
+    const IPV6: &'static str = "::1";
     fn format(&self) -> Vec<String>;
 }
 
@@ -35,7 +37,8 @@ impl ServerFormatter for Source {
             }
             for cap in re.captures_iter(line) {
                 if !Self::LOCALHOST_ADDRS.contains(&&cap[2]) {
-                    output.push(format!("server=/{}/", &cap[2]))
+                    output.push(format!("server=/{}/{}", &cap[2], Self::IPV4));
+                    output.push(format!("server=/{}/{}", &cap[2], Self::IPV6))
                 }
             }
         }
