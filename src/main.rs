@@ -4,7 +4,7 @@ extern crate reqwest;
 mod formatter;
 mod source;
 
-use formatter::Formatter;
+use formatter::ServerFormatter;
 use source::Source;
 use std::fs::File;
 use std::io::{BufWriter, Write};

@@ -13,7 +13,18 @@ pub trait Formatter {
     fn format(&self) -> Vec<String>;
 }
 
+pub trait ServerFormatter: Formatter {
+    fn format(&self) -> Vec<String>;
+}
+
 impl Formatter for Source {
+    fn format(&self) -> Vec<String> {
+        let output: Vec<String> = vec![];
+        output
+    }
+}
+
+impl ServerFormatter for Source {
     fn format(&self) -> Vec<String> {
         let re = Regex::new(Self::REGEX_PATTERN).unwrap();
         let mut output: Vec<String> = vec![];
