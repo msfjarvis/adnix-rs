@@ -9,12 +9,13 @@ pub trait Formatter {
         "localhost.localdomain",
         "broadcasthost",
     ];
+    const REGEX_PATTERN: &'static str = r"^\s*(\d+\.\d+\.\d+\.\d+)\s+([\w\-\.]+)";
     fn format(&self) -> Vec<String>;
 }
 
 impl Formatter for Source {
     fn format(&self) -> Vec<String> {
-        let re = Regex::new(r"^\s*(\d+\.\d+\.\d+\.\d+)\s+([\w\-\.]+)").unwrap();
+        let re = Regex::new(Self::REGEX_PATTERN).unwrap();
         let mut output: Vec<String> = vec![];
         let raw_hosts = self.download_to_string().unwrap();
         for line in raw_hosts.lines() {
