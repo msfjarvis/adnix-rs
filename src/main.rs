@@ -25,10 +25,33 @@ fn main() {
                 .help("Output file")
                 .takes_value(true),
         )
+        .arg(
+            Arg::with_name("formatter")
+                .short("f")
+                .long("formatter")
+                .default_value("dnsmasq")
+                .takes_value(true)
+                .possible_values(&["dnsmasq", "dnsmasq-server", "unbound"])
+        )
         .get_matches();
     let mut contents = String::new();
-    for source in sources {
-        contents.push_str(source.format_to_dnsmasq().join("\n").as_str())
+    match matches.value_of("formatter") {
+        Some(val) => {
+            if val == "dnsmasq" {
+                for source in sources {
+                    contents.push_str(source.format_to_dnsmasq().join("\n").as_str())
+                }
+            } else if val == "dnsmasq-server" {
+                for source in sources {
+                    contents.push_str(source.format_to_dnsmasq_server().join("\n").as_str())
+                }
+            } else {
+                for source in sources {
+                    contents.push_str(source.format_to_unbound().join("\n").as_str())
+                }
+            }
+        }
+        None => {}
     }
     match matches.value_of("output") {
         Some(val) => {
