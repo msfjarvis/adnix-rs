@@ -38,15 +38,29 @@ fn main() {
                 .takes_value(true)
                 .possible_values(&["dnsmasq", "dnsmasq-server", "unbound"])
         )
+        .arg(
+            Arg::with_name("ipv4_addr")
+            .long("address")
+            .default_value("127.0.0.1")
+            .takes_value(true)
+        )
+        .arg(
+            Arg::with_name("ipv6_addr")
+            .long("v6address")
+            .default_value("::1")
+            .takes_value(true)
+        )
         .get_matches();
+    let ipv4_addr = matches.value_of("ipv4_addr").unwrap_or_default();
+    let ipv6_addr = matches.value_of("ipv6_addr").unwrap_or_default();
     match matches.value_of("formatter") {
         Some(val) => {
             for source in sources.keys() {
                 if let Some(s) = sources.get(source) {
                     let raw_data = match val {
-                        "dnsmasq" => s.format_to_dnsmasq(),
+                        "dnsmasq" => s.format_to_dnsmasq(ipv4_addr, ipv6_addr),
                         "dnsmasq-server" => s.format_to_dnsmasq_server(),
-                        "unbound" => s.format_to_unbound(),
+                        "unbound" => s.format_to_unbound(ipv4_addr, ipv6_addr),
                         _ => panic!("Invalid formatter!"),
                     };
                     println!("INFO: {}: {} entries", source, raw_data.len());
