@@ -6,14 +6,19 @@ mod source;
 
 use clap::{App, Arg};
 use source::Source;
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufWriter, Write};
 
 fn main() {
-    let sources = vec![Source {
-        name: String::from("Harsh Shandilya's hosts list"),
-        url: String::from("https://download.msfjarvis.website/adblock/hosts"),
-    }];
+    let mut contents = String::new();
+    let mut sources: HashMap<&str, Source> = HashMap::new();
+    sources.insert(
+        "Harsh Shandilya's hosts list",
+        Source {
+            url: String::from("https://download.msfjarvis.website/adblock/hosts"),
+        },
+    );
     let matches = App::new("adnix-rs").version("0.1.0")
         .author("Harsh Shandilya <msfjarvis@gmail.com>")
         .about("CLI tool to convert ad blocking hosts files into DNSMasq or Unbound configuration files")
@@ -34,20 +39,18 @@ fn main() {
                 .possible_values(&["dnsmasq", "dnsmasq-server", "unbound"])
         )
         .get_matches();
-    let mut contents = String::new();
     match matches.value_of("formatter") {
         Some(val) => {
-            if val == "dnsmasq" {
-                for source in sources {
-                    contents.push_str(source.format_to_dnsmasq().join("\n").as_str())
-                }
-            } else if val == "dnsmasq-server" {
-                for source in sources {
-                    contents.push_str(source.format_to_dnsmasq_server().join("\n").as_str())
-                }
-            } else {
-                for source in sources {
-                    contents.push_str(source.format_to_unbound().join("\n").as_str())
+            for source in sources.keys() {
+                if let Some(s) = sources.get(source) {
+                    let raw_data = match val {
+                        "dnsmasq" => s.format_to_dnsmasq(),
+                        "dnsmasq-server" => s.format_to_dnsmasq_server(),
+                        "unbound" => s.format_to_unbound(),
+                        _ => panic!("Invalid formatter!"),
+                    };
+                    println!("INFO: {}: {} entries", source, raw_data.len());
+                    contents.push_str(raw_data.join("\n").as_str())
                 }
             }
         }

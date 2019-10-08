@@ -2,7 +2,6 @@ use regex::Regex;
 use std::error::Error;
 
 pub struct Source {
-    pub name: String,
     pub url: String,
 }
 
