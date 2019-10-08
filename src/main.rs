@@ -23,18 +23,24 @@ fn main() {
                 .long("file")
                 .value_name("OUTPUT")
                 .help("Output file")
-                .default_value("adblock.list")
                 .takes_value(true),
         )
         .get_matches();
-    let write_file = File::create(matches.value_of("output").unwrap_or_default()).unwrap();
     let mut contents = String::new();
-    let mut writer = BufWriter::new(&write_file);
     for source in sources {
         contents.push_str(source.format_to_dnsmasq().join("\n").as_str())
     }
-    match write!(&mut writer, "{}", contents) {
-        Ok(_) => {}
-        Err(e) => println!("{}", e),
+    match matches.value_of("output") {
+        Some(val) => {
+            let write_file = File::create(val).unwrap();
+            let mut writer = BufWriter::new(&write_file);
+            match write!(&mut writer, "{}", contents) {
+                Ok(_) => {}
+                Err(e) => println!("{}", e),
+            };
+        }
+        None => {
+            println!("{}", contents);
+        }
     };
 }
