@@ -5,6 +5,10 @@ pub struct Source {
     pub url: String,
 }
 
+fn download(url: &str) -> Result<String, Box<dyn Error>> {
+    Ok(reqwest::get(url)?.text()?)
+}
+
 impl Source {
     // I don't fully understand this and would appreciate help :)
     const LOCALHOST_ADDRS: &'static [&'static str] = &[
@@ -16,8 +20,7 @@ impl Source {
     const REGEX_PATTERN: &'static str = r"^\s*(\d+\.\d+\.\d+\.\d+)\s+([\w\-\.]+)";
 
     pub fn download_to_string(&self) -> Result<String, Box<dyn Error>> {
-        let req = reqwest::get(self.url.as_str())?.text()?;
-        Ok(req)
+        download(self.url.as_str())
     }
 
     pub fn format_to_dnsmasq(&self, ipv4_addr: &str, ipv6_addr: &str) -> Vec<String> {
