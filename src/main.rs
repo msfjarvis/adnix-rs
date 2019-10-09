@@ -53,22 +53,19 @@ fn main() {
         .get_matches();
     let ipv4_addr = matches.value_of("ipv4_addr").unwrap_or_default();
     let ipv6_addr = matches.value_of("ipv6_addr").unwrap_or_default();
-    match matches.value_of("formatter") {
-        Some(val) => {
-            for source in sources.keys() {
-                if let Some(s) = sources.get(source) {
-                    let raw_data = match val {
-                        "dnsmasq" => s.format_to_dnsmasq(ipv4_addr, ipv6_addr),
-                        "dnsmasq-server" => s.format_to_dnsmasq_server(),
-                        "unbound" => s.format_to_unbound(ipv4_addr, ipv6_addr),
-                        _ => panic!("Invalid formatter!"),
-                    };
-                    println!("INFO: {}: {} entries", source, raw_data.len());
-                    contents.push_str(raw_data.join("\n").as_str())
-                }
+    if let Some(val) = matches.value_of("formatter") {
+        for source in sources.keys() {
+            if let Some(s) = sources.get(source) {
+                let raw_data = match val {
+                    "dnsmasq" => s.format_to_dnsmasq(ipv4_addr, ipv6_addr),
+                    "dnsmasq-server" => s.format_to_dnsmasq_server(),
+                    "unbound" => s.format_to_unbound(ipv4_addr, ipv6_addr),
+                    _ => panic!("Invalid formatter!"),
+                };
+                println!("INFO: {}: {} entries", source, raw_data.len());
+                contents.push_str(raw_data.join("\n").as_str())
             }
         }
-        None => {}
     }
     match matches.value_of("output") {
         Some(val) => {
