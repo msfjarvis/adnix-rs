@@ -22,33 +22,29 @@ fn main() {
     let matches = App::new("adnix-rs").version("0.1.0")
         .author("Harsh Shandilya <msfjarvis@gmail.com>")
         .about("CLI tool to convert ad blocking hosts files into DNSMasq or Unbound configuration files")
-        .arg(
+        .args(
+            &[
             Arg::with_name("output")
                 .short("o")
                 .long("file")
                 .value_name("OUTPUT")
                 .help("Output file")
                 .takes_value(true),
-        )
-        .arg(
             Arg::with_name("formatter")
                 .short("f")
                 .long("formatter")
                 .default_value("dnsmasq")
                 .takes_value(true)
-                .possible_values(&["dnsmasq", "dnsmasq-server", "unbound"])
-        )
-        .arg(
+                .possible_values(&["dnsmasq", "dnsmasq-server", "unbound"]),
             Arg::with_name("ipv4_addr")
-            .long("address")
-            .default_value("127.0.0.1")
-            .takes_value(true)
-        )
-        .arg(
+                .long("address")
+                .default_value("127.0.0.1")
+                .takes_value(true),
             Arg::with_name("ipv6_addr")
-            .long("v6address")
-            .default_value("::1")
-            .takes_value(true)
+                .long("v6address")
+                .default_value("::1")
+                .takes_value(true)
+            ]
         )
         .get_matches();
     let ipv4_addr = matches.value_of("ipv4_addr").unwrap_or_default();
