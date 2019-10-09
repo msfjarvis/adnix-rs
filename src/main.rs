@@ -67,17 +67,14 @@ fn main() {
             }
         }
     }
-    match matches.value_of("output") {
-        Some(val) => {
-            let write_file = File::create(val).unwrap();
-            let mut writer = BufWriter::new(&write_file);
-            match write!(&mut writer, "{}", contents) {
-                Ok(_) => {}
-                Err(e) => println!("{}", e),
-            };
-        }
-        None => {
-            println!("{}", contents);
-        }
-    };
+    if let Some(val) = matches.value_of("output") {
+        let write_file = File::create(val).unwrap();
+        let mut writer = BufWriter::new(&write_file);
+        match write!(&mut writer, "{}", contents) {
+            Ok(_) => {}
+            Err(e) => println!("{}", e),
+        };
+    } else {
+        println!("{}", contents);
+    }
 }
