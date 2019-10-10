@@ -1,5 +1,5 @@
 [package]
-name = "adnix-rs"
+name = "adnix"
 version = "0.1.0"
 authors = ["Harsh Shandilya <msfjarvis@gmail.com>"]
 edition = "2018"
