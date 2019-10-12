@@ -1,37 +1,40 @@
 name: adnix-rs
-version: "0.1.0"
-author: Harsh Shandilya <msfjarvis@gmail.com>
-about: "CLI tool to convert ad blocking hosts files into DNSMasq or Unbound configuration files"
+version: 0.1.0
+author: 'Harsh Shandilya <msfjarvis@gmail.com>'
+about: 'CLI tool to convert ad blocking hosts files into DNSMasq or Unbound configuration files'
 args:
-    - output:
-          help: Output file
-          short: o
-          long: output
-          takes_value: true
-          value_name: "OUTPUT"
-    - formatter:
-          help: Formatter
-          short: f
-          long: formatter
-          default_value: "dnsmasq"
-          takes_value: true
-          possible_values: ["dnsmasq", "dnsmasq-server", "unbound"]
-          value_name: "STRING"
-    - ipv4_addr:
-          help: IPv4 address
-          long: address
-          default_value: "127.0.0.1"
-          takes_value: true
-          value_name: "ADDRESS"
-    - ipv6_addr:
-          help: IPv6 address
-          long: v6address
-          default_value: "::1"
-          takes_value: true
-          value_name: "ADDRESS"
-    - sources_file:
-          help: Source File
-          short: s
-          long: sources_file
-          takes_value: true
-          value_name: "STRING"
+- output:
+      help: 'Output file'
+      short: o
+      long: output
+      takes_value: true
+      value_name: OUTPUT
+- formatter:
+      help: Formatter
+      short: f
+      long: formatter
+      default_value: dnsmasq
+      takes_value: true
+      possible_values:
+      - dnsmasq
+      - dnsmasq-server
+      - unbound
+      value_name: STRING
+- ipv4_addr:
+      help: 'IPv4 address'
+      long: address
+      default_value: 127.0.0.1
+      takes_value: true
+      value_name: ADDRESS
+- ipv6_addr:
+      help: 'IPv6 address'
+      long: v6address
+      default_value: '::1'
+      takes_value: true
+      value_name: ADDRESS
+- sources_file:
+      help: 'Source File'
+      short: s
+      long: sources_file
+      takes_value: true
+      value_name: STRING
