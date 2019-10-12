@@ -52,7 +52,7 @@ fn main() {
         let mut writer = BufWriter::new(&write_file);
         match write!(&mut writer, "{}", contents) {
             Ok(_) => {}
-            Err(e) => println!("{}", e),
+            Err(e) => eprintln!("{}", e),
         };
     } else {
         println!("{}", contents);
@@ -60,7 +60,6 @@ fn main() {
 }
 
 fn parse_file(filepath: &str) -> HashMap<String, Source> {
-    println!("Sources path {}", filepath);
     let mut list: HashMap<String, Source> = HashMap::new();
     let file = File::open(filepath).unwrap_or_else(|err| {
         eprintln!("Problem openning file: {}", err);
