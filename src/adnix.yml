@@ -33,7 +33,7 @@ args:
       takes_value: true
       value_name: ADDRESS
 - sources_file:
-      help: 'Source File'
+      help: 'File to read "name|source url" mappings from'
       short: s
       long: sources_file
       takes_value: true
