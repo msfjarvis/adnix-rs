@@ -1,20 +1,16 @@
 # adnix-rs
 
 [![GitHub workflow](https://github.com/msfjarvis/adnix-rs/workflows/Test%20Rust%20project/badge.svg)](https://github.com/msfjarvis/adnix-rs/actions)
+[![Version info](https://img.shields.io/crates/v/adnix.svg)](https://crates.io/crates/adnix)
 
 Rust reimplementation of [sniner/adnix](https://github.com/sniner/adnix) for educational purposes.
 
 ## Installation
 
-adnix is not available on [crates.io](https://crates.io) as of now, but you can install it through cargo and this git repository.
+adnix is available on [crates.io](https://crates.io/crates/adnix) and you can install it through cargo.
 
 ```shell
-$ cargo install --git https://github.com/msfjarvis/adnix-rs --bin adnix
-    Updating git repository `https://github.com/msfjarvis/adnix-rs`
-  Installing adnix v0.1.0 (https://github.com/msfjarvis/adnix-rs#d90134fb)
-... (truncated)
-  Installing /home/msfjarvis/.cargo/bin/adnix
-   Installed package `adnix v0.1.0 (https://github.com/msfjarvis/adnix-rs#d90134fb)` (executable `adnix`)
+cargo install adnix
 ```
 
 ## Usage
