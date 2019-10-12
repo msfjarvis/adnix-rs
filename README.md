@@ -1,6 +1,6 @@
 # adnix-rs
 
-[![GitHub workflow](https://github.com/msfjarvis/adnix-rs/workflows/Test%20Rust%20project/badge.svg)](https://github.com/msfjarvis/adnix-rs/actions)
+[![GitHub workflow](https://github.com/msfjarvis/adnix-rs/workflows/Build/badge.svg)](https://github.com/msfjarvis/adnix-rs/actions)
 [![Version info](https://img.shields.io/crates/v/adnix.svg)](https://crates.io/crates/adnix)
 
 Rust reimplementation of [sniner/adnix](https://github.com/sniner/adnix) for educational purposes.
