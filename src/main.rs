@@ -4,49 +4,28 @@ extern crate reqwest;
 
 mod source;
 
-use clap::{App, Arg};
+use clap::{load_yaml, App};
 use source::Source;
-use std::collections::HashMap;
-use std::fs::File;
-use std::io::{BufWriter, Write};
+use std::{
+    collections::HashMap,
+    fs::File,
+    io::{BufRead, BufReader, BufWriter, Write},
+    process,
+};
 
 fn main() {
+    let yaml = load_yaml!("adnix.yml");
+    let matches = App::from_yaml(yaml).get_matches();
+
+    let sources_file = if matches.is_present("sources_file") {
+        matches.value_of("sources_file").unwrap()
+    } else {
+        ""
+    };
+
+    let sources: HashMap<String, Source> = parse_file(&sources_file);
+
     let mut contents = String::new();
-    let mut sources: HashMap<&str, Source> = HashMap::new();
-    sources.insert(
-        "Harsh Shandilya's hosts list",
-        Source {
-            url: String::from("https://download.msfjarvis.website/adblock/hosts"),
-        },
-    );
-    let matches = App::new("adnix-rs").version("0.1.0")
-        .author("Harsh Shandilya <msfjarvis@gmail.com>")
-        .about("CLI tool to convert ad blocking hosts files into DNSMasq or Unbound configuration files")
-        .args(
-            &[
-            Arg::with_name("output")
-                .short("o")
-                .long("file")
-                .value_name("OUTPUT")
-                .help("Output file")
-                .takes_value(true),
-            Arg::with_name("formatter")
-                .short("f")
-                .long("formatter")
-                .default_value("dnsmasq")
-                .takes_value(true)
-                .possible_values(&["dnsmasq", "dnsmasq-server", "unbound"]),
-            Arg::with_name("ipv4_addr")
-                .long("address")
-                .default_value("127.0.0.1")
-                .takes_value(true),
-            Arg::with_name("ipv6_addr")
-                .long("v6address")
-                .default_value("::1")
-                .takes_value(true)
-            ]
-        )
-        .get_matches();
     let ipv4_addr = matches.value_of("ipv4_addr").unwrap_or_default();
     let ipv6_addr = matches.value_of("ipv6_addr").unwrap_or_default();
     if let Some(val) = matches.value_of("formatter") {
@@ -73,4 +52,38 @@ fn main() {
     } else {
         println!("{}", contents);
     }
+}
+
+fn parse_file(filepath: &str) -> HashMap<String, Source> {
+    println!("Sources path {}", filepath);
+    let mut list: HashMap<String, Source> = HashMap::new();
+    if filepath != "" {
+        let file = File::open(filepath).unwrap_or_else(|err| {
+            eprintln!("Problem openning file: {}", err);
+            process::exit(1);
+        });
+
+        let lines = BufReader::new(file).lines();
+        for line in lines {
+            let content = line.unwrap_or_else(|err| {
+                eprintln!("Problem parsing lines: {}", err);
+                process::exit(1);
+            });
+            let vec: Vec<&str> = content.split('|').collect();
+            list.insert(
+                vec[0].to_owned(),
+                Source {
+                    url: vec[1].to_owned(),
+                },
+            );
+        }
+    } else {
+        list.insert(
+            String::from("Harsh Shandilya's hosts list"),
+            Source {
+                url: String::from("https://download.msfjarvis.website/adblock/hosts"),
+            },
+        );
+    }
+    list
 }
