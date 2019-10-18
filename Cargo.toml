@@ -7,6 +7,7 @@ description = "Rust binary to generate DNSMasq and Unbound configurations from U
 license = "MIT"
 homepage = "https://github.com/msfjarvis/adnix-rs"
 repository = "https://github.com/msfjarvis/adnix-rs"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
