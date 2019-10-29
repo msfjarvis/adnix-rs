@@ -59,3 +59,21 @@ pub fn format_to_dnsmasq(raw_hosts: String, ipv4_addr: &str, ipv6_addr: &str) ->
     }
     output
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    fn emit_hosts_file() -> String {
+        std::fs::read_to_string("test_data/hosts").unwrap()
+    }
+
+    #[test]
+    fn test_dnsmasq_formatter() {
+        let results = format_to_dnsmasq(emit_hosts_file(), "127.0.0.1", "::1");
+        assert!(results.contains(&String::from("address=/adserver.abv.bg/127.0.0.1")));
+        assert!(results.contains(&String::from("address=/adserver.abv.bg/::1")));
+        assert!(!results.contains(&String::from("# Leading comment test 0.0.0.0 fr.a2dfp.net")));
+        assert!(!results.contains(&String::from("# Normal comment")));
+        assert!(!results.contains(&String::from("address=/localhost/127.0.01")));
+    }
+}
