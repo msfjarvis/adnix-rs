@@ -76,4 +76,26 @@ mod tests {
         assert!(!results.contains(&String::from("# Normal comment")));
         assert!(!results.contains(&String::from("address=/localhost/127.0.01")));
     }
+
+    #[test]
+    fn test_dnsmasq_server_formatter() {
+        let results = format_to_dnsmasq_server(emit_hosts_file());
+        assert!(results.contains(&String::from("server=/adserver.abv.bg/")));
+        assert!(results.contains(&String::from("server=/adserver.abv.bg/")));
+        assert!(!results.contains(&String::from("# Leading comment test 0.0.0.0 fr.a2dfp.net")));
+        assert!(!results.contains(&String::from("# Normal comment")));
+        assert!(!results.contains(&String::from("server=/localhost/")));
+    }
+
+    #[test]
+    fn test_unbound_formatter() {
+        let results = format_to_unbound(emit_hosts_file(), "127.0.0.1", "::1");
+        assert!(results.contains(&String::from("  local-zone: adserver.abv.bg A 127.0.0.1")));
+        assert!(results.contains(&String::from("  local-zone: adserver.abv.bg AAAA ::1")));
+        assert!(!results.contains(&String::from(
+            "  # Leading comment test 0.0.0.0 fr.a2dfp.net"
+        )));
+        assert!(!results.contains(&String::from("  # Normal comment")));
+        assert!(!results.contains(&String::from("  local-zone: localhost A 127.0.01")));
+    }
 }
