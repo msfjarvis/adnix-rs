@@ -1,4 +1,4 @@
-name: Build
+name: CI Test
 on: [push, pull_request]
 jobs:
   test:
@@ -14,4 +14,4 @@ jobs:
         rust-version: ${{ matrix.rust }}
     - uses: actions/checkout@master
     - name: Run build
-      run: cargo build --release
+      run: cargo test -- --nocapture
