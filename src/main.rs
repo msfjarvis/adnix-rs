@@ -2,6 +2,7 @@ extern crate clap;
 extern crate regex;
 extern crate reqwest;
 
+mod formatters;
 mod source;
 
 use clap::{load_yaml, App};
