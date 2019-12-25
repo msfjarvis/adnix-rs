@@ -1,6 +1,6 @@
 extern crate clap;
 extern crate regex;
-extern crate reqwest;
+extern crate ureq;
 
 mod formatters;
 mod source;
