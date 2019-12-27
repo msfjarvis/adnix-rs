@@ -1,6 +1,6 @@
 [package]
 name = "adnix"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Harsh Shandilya <msfjarvis@gmail.com>"]
 edition = "2018"
 description = "Rust binary to generate DNSMasq and Unbound configurations from UNIX host files"
@@ -18,4 +18,3 @@ ureq = "0.11.2"
 
 [build-dependencies]
 clap = { version = "^2.33.0", features = ["yaml"] }
-
