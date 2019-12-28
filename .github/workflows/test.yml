@@ -14,4 +14,6 @@ jobs:
         rust-version: ${{ matrix.rust }}
     - uses: actions/checkout@master
     - name: Run build
-      run: cargo test -- --nocapture
+      run: |
+          cargo test --locked -- --nocapture
+          cargo fmt -- --check
