@@ -15,5 +15,6 @@ jobs:
     - uses: actions/checkout@master
     - name: Run build
       run: |
+          rustup component add rustfmt
           cargo test --locked -- --nocapture
           cargo fmt -- --check
