@@ -25,7 +25,7 @@ fn main() {
         list.insert(
             String::from("Harsh Shandilya's hosts list"),
             Source {
-                url: String::from("https://download.msfjarvis.website/adblock/hosts"),
+                url: String::from("https://dl.msfjarvis.dev/adblock/hosts"),
             },
         );
         list
