@@ -92,6 +92,9 @@ mod tests {
         let source_config = parse_sources_config_file("test_data/sample_config");
         assert!(source_config.contains_key("StevenBlack"));
         assert!(source_config.get("StevenBlack").is_some());
-        assert!(source_config.get("StevenBlack").unwrap().url == String::from("https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"));
+        assert!(
+            source_config.get("StevenBlack").unwrap().url
+                == String::from("https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts")
+        );
     }
 }
