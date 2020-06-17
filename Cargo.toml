@@ -1,6 +1,6 @@
 [package]
 name = "adnix"
-version = "0.4.1"
+version = "0.4.2-alpha.0"
 authors = ["Harsh Shandilya <me@msfjarvis.dev>"]
 edition = "2018"
 description = "Rust binary to generate DNSMasq and Unbound configurations from UNIX host files"
