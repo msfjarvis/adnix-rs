@@ -1,6 +1,6 @@
 name: adnix-rs
 version: 0.1.0
-author: 'Harsh Shandilya <msfjarvis@gmail.com>'
+author: 'Harsh Shandilya <me@msfjarvis.dev>'
 about: 'CLI tool to convert ad blocking hosts files into DNSMasq or Unbound configuration files'
 args:
 - output:
