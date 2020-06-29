@@ -1,7 +1,3 @@
-extern crate clap;
-extern crate regex;
-extern crate ureq;
-
 mod formatters;
 mod source;
 
