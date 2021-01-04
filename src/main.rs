@@ -2,6 +2,7 @@ mod formatters;
 mod source;
 
 use clap::{load_yaml, App};
+use color_eyre::Result;
 use source::Source;
 use std::{
     collections::HashMap,
@@ -10,7 +11,8 @@ use std::{
     process,
 };
 
-fn main() {
+fn main() -> Result<()> {
+    color_eyre::install()?;
     let yaml = load_yaml!("adnix.yml");
     let matches = App::from_yaml(yaml).get_matches();
 
@@ -53,7 +55,8 @@ fn main() {
         };
     } else {
         println!("{}", contents);
-    }
+    };
+    Ok(())
 }
 
 fn parse_sources_config_file(filepath: &str) -> HashMap<String, Source> {

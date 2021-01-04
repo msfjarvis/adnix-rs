@@ -1,12 +1,13 @@
 use crate::formatters;
+use color_eyre::Result;
 
 pub struct Source {
     pub url: String,
 }
 
 impl Source {
-    pub fn download_to_string(&self) -> Result<String, std::io::Error> {
-        ureq::get(self.url.as_str()).call().into_string()
+    pub fn download_to_string(&self) -> Result<String> {
+        Ok(ureq::get(self.url.as_str()).call()?.into_string()?)
     }
 
     pub fn format_to_dnsmasq(&self, ipv4_addr: &str, ipv6_addr: &str) -> Vec<String> {
