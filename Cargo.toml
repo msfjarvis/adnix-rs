@@ -13,7 +13,7 @@ readme = "README.md"
 
 [dependencies]
 clap = { version = "2.33.3", features = ["yaml", "wrap_help"] }
-color-eyre = { version = "0.5.10", default-features = false }
+color-eyre = { version = "0.5.11", default-features = false }
 regex = "1.4.6"
 ureq = "2.0.2"
 
