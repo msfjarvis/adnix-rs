@@ -1,9 +1,7 @@
+mod cli_opts;
 mod formatters;
 mod source;
 
-use clap::{load_yaml, App};
-use color_eyre::Result;
-use source::Source;
 use std::{
     collections::HashMap,
     fs::File,
@@ -11,42 +9,36 @@ use std::{
     process,
 };
 
+use clap::Clap;
+use color_eyre::Result;
+
+use crate::{
+    cli_opts::{FormatterOpt, Opts},
+    source::Source,
+};
+
 fn main() -> Result<()> {
     color_eyre::install()?;
-    let yaml = load_yaml!("adnix.yml");
-    let matches = App::from_yaml(yaml).get_matches();
+    let opts: Opts = Opts::parse();
 
-    let sources: HashMap<String, Source> = if matches.is_present("sources_file") {
-        parse_sources_config_file(&matches.value_of("sources_file").unwrap())
-    } else {
-        let mut list: HashMap<String, Source> = HashMap::new();
-        list.insert(
-            String::from("Harsh Shandilya's hosts list"),
-            Source {
-                url: String::from("https://dl.msfjarvis.dev/adblock/hosts"),
-            },
-        );
-        list
-    };
+    let sources = parse_sources_config_file(&opts.sources_file);
 
     let mut contents = String::new();
-    let ipv4_addr = matches.value_of("ipv4_addr").unwrap_or_default();
-    let ipv6_addr = matches.value_of("ipv6_addr").unwrap_or_default();
-    if let Some(val) = matches.value_of("formatter") {
-        for source in sources.keys() {
-            if let Some(s) = sources.get(source) {
-                let raw_data = match val {
-                    "dnsmasq" => s.format_to_dnsmasq(ipv4_addr, ipv6_addr),
-                    "dnsmasq-server" => s.format_to_dnsmasq_server(),
-                    "unbound" => s.format_to_unbound(ipv4_addr, ipv6_addr),
-                    _ => panic!("Invalid formatter!"),
-                };
-                println!("INFO: {}: {} entries", source, raw_data.len());
-                contents.push_str(raw_data.join("\n").as_str())
-            }
+    let ipv4_addr = opts.ipv4_address;
+    let ipv6_addr = opts.ipv6_address;
+    let formatter = opts.formatter;
+    for source in sources.keys() {
+        if let Some(s) = sources.get(source) {
+            let raw_data = match formatter {
+                FormatterOpt::Dnsmasq => s.format_to_dnsmasq(&ipv4_addr, &ipv6_addr),
+                FormatterOpt::DnsmasqServer => s.format_to_dnsmasq_server(),
+                FormatterOpt::Unbound => s.format_to_unbound(&ipv4_addr, &ipv6_addr),
+            };
+            println!("INFO: {}: {} entries", source, raw_data.len());
+            contents.push_str(raw_data.join("\n").as_str())
         }
     }
-    if let Some(val) = matches.value_of("output") {
+    if let Some(val) = opts.output {
         let write_file = File::create(val).unwrap();
         let mut writer = BufWriter::new(&write_file);
         match write!(&mut writer, "{}", contents) {
