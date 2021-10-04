@@ -1,5 +1,6 @@
-use crate::formatters;
 use color_eyre::Result;
+
+use crate::formatters;
 
 pub struct Source {
     pub url: String,
