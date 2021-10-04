@@ -26,7 +26,7 @@ pub(crate) struct Opts {
 
     /// File to read "name|source url" mappings from
     #[clap(long, short)]
-    pub(crate) sources_file: Option<String>,
+    pub(crate) sources_file: String,
 }
 
 #[derive(ArgEnum, Clap, Debug)]

@@ -21,18 +21,7 @@ fn main() -> Result<()> {
     color_eyre::install()?;
     let opts: Opts = Opts::parse();
 
-    let sources: HashMap<String, Source> = if let Some(sources_file) = opts.sources_file {
-        parse_sources_config_file(&sources_file)
-    } else {
-        let mut list: HashMap<String, Source> = HashMap::new();
-        list.insert(
-            String::from("Harsh Shandilya's hosts list"),
-            Source {
-                url: String::from("https://dl.msfjarvis.dev/adblock/hosts"),
-            },
-        );
-        list
-    };
+    let sources = parse_sources_config_file(&opts.sources_file);
 
     let mut contents = String::new();
     let ipv4_addr = opts.ipv4_address;
