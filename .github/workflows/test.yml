@@ -7,54 +7,6 @@ on:
 name: Check Rust code
 jobs:
   check:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        rust_channel: [stable, beta, nightly]
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Install Rust nightly with rustfmt and clippy
-      uses: actions-rs/toolchain@v1
-      with:
-        profile: minimal
-        toolchain: ${{ matrix.rust_channel }}
-        components: rustfmt, clippy
-
-    - name: Generate lockfile
-      uses: actions-rs/cargo@v1
-      with:
-        command: generate-lockfile
-
-    - name: Cache cargo registry and build outputs
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.cargo/registry
-          target
-        key: ${{ runner.os }}-cargo-${{ hashFiles('Cargo.lock') }}
-
-    - name: Check formatting
-      uses: actions-rs/cargo@v1
-      with:
-        command: fmt
-        args: -- --check
-
-    - name: Annotate commit with clippy warnings
-      if: "${{ github.event_name == 'push' }}"
-      uses: actions-rs/clippy-check@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        args: --all-features
-
-    - name: Run cargo check
-      uses: actions-rs/cargo@v1
-      with:
-        command: check
-
-    - name: Run cargo test
-      uses: actions-rs/cargo@v1
-      with:
-        command: test
+    uses: msfjarvis/shared-workflows/.github/workflows/test-rust-project.yml@main
+    secrets:
+      github-token: "${{ secrets.GITHUB_TOKEN }}"
