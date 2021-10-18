@@ -9,7 +9,7 @@ use std::{
     process,
 };
 
-use clap::Clap;
+use clap::Parser;
 use color_eyre::Result;
 
 use crate::{
