@@ -1,11 +1,10 @@
-use clap::{AppSettings, ArgEnum, Clap};
+use clap::{ArgEnum, Parser};
 
-#[derive(Clap, Debug)]
+#[derive(Debug, Parser)]
 #[clap(
     author,
     version,
-    about = "CLI tool to convert ad blocking hosts files into DNSMasq or Unbound configuration files",
-    setting = AppSettings::ColoredHelp,
+    about = "CLI tool to convert ad blocking hosts files into DNSMasq or Unbound configuration files"
 )]
 pub(crate) struct Opts {
     /// Output file
@@ -29,7 +28,7 @@ pub(crate) struct Opts {
     pub(crate) sources_file: String,
 }
 
-#[derive(ArgEnum, Clap, Debug)]
+#[derive(ArgEnum, Clone, Debug, Parser)]
 pub(crate) enum FormatterOpt {
     Dnsmasq,
     DnsmasqServer,
