@@ -6,7 +6,6 @@ use std::{
     collections::HashMap,
     fs::File,
     io::{BufRead, BufReader, BufWriter, Write},
-    process,
 };
 
 use clap::Parser;
@@ -35,7 +34,7 @@ fn main() -> Result<()> {
                 FormatterOpt::Unbound => s.format_to_unbound(&ipv4_addr, &ipv6_addr),
             };
             println!("INFO: {}: {} entries", source, raw_data.len());
-            contents.push_str(raw_data.join("\n").as_str())
+            contents.push_str(raw_data.join("\n").as_str());
         }
     }
     if let Some(val) = opts.output {
@@ -54,20 +53,19 @@ fn main() -> Result<()> {
 fn parse_sources_config_file(filepath: &str) -> HashMap<String, Source> {
     let mut list: HashMap<String, Source> = HashMap::new();
     if let Ok(file) = File::open(filepath) {
-        let lines = BufReader::new(file).lines();
-        for line in lines {
-            let content = line.unwrap_or_else(|err| {
-                eprintln!("Problem parsing lines: {}", err);
-                process::exit(1);
+        BufReader::new(file)
+            .lines()
+            .filter(|result| result.is_ok())
+            .map(|result| result.unwrap())
+            .for_each(|line| {
+                let vec: Vec<&str> = line.split('|').collect();
+                list.insert(
+                    vec[0].to_owned(),
+                    Source {
+                        url: vec[1].to_owned(),
+                    },
+                );
             });
-            let vec: Vec<&str> = content.split('|').collect();
-            list.insert(
-                vec[0].to_owned(),
-                Source {
-                    url: vec[1].to_owned(),
-                },
-            );
-        }
     } else {
         eprintln!("Problem opening file: {}", filepath);
     };
@@ -83,9 +81,9 @@ mod tests {
         let source_config = parse_sources_config_file("test_data/sample_config");
         assert!(source_config.contains_key("StevenBlack"));
         assert!(source_config.get("StevenBlack").is_some());
-        assert!(
-            source_config.get("StevenBlack").unwrap().url
-                == String::from("https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts")
+        assert_eq!(
+            source_config.get("StevenBlack").unwrap().url,
+            *"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
         );
     }
 }

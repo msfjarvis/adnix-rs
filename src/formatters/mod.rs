@@ -20,7 +20,7 @@ pub fn format_to_unbound(raw_hosts: String, ipv4_addr: &str, ipv6_addr: &str) ->
             if !LOCALHOST_ADDRS.contains(&&cap[2]) {
                 output.push(format!("  local-zone: {} redirect", &cap[2]));
                 output.push(format!("  local-zone: {} A {}", &cap[2], ipv4_addr));
-                output.push(format!("  local-zone: {} AAAA {}", &cap[2], ipv6_addr))
+                output.push(format!("  local-zone: {} AAAA {}", &cap[2], ipv6_addr));
             }
         }
     }
@@ -36,7 +36,7 @@ pub fn format_to_dnsmasq_server(raw_hosts: String) -> Vec<String> {
         }
         for cap in re.captures_iter(line) {
             if !LOCALHOST_ADDRS.contains(&&cap[2]) {
-                output.push(format!("server=/{}/", &cap[2]))
+                output.push(format!("server=/{}/", &cap[2]));
             }
         }
     }
@@ -53,7 +53,7 @@ pub fn format_to_dnsmasq(raw_hosts: String, ipv4_addr: &str, ipv6_addr: &str) ->
         for cap in re.captures_iter(line) {
             if !LOCALHOST_ADDRS.contains(&&cap[2]) {
                 output.push(format!("address=/{}/{}", &cap[2], ipv4_addr));
-                output.push(format!("address=/{}/{}", &cap[2], ipv6_addr))
+                output.push(format!("address=/{}/{}", &cap[2], ipv6_addr));
             }
         }
     }
