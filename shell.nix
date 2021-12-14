@@ -5,5 +5,7 @@ mkShell {
       toolchain.default.override {
         extensions = [ "rust-src" "rustfmt-preview" ];
       }))
+  ] ++ lib.optionals stdenv.isDarwin [
+    pkgs.darwin.apple_sdk.frameworks.Security
   ];
 }
