@@ -13,7 +13,7 @@ readme = "README.md"
 
 [dependencies]
 clap = { version = "3.0.7", features = [ "color", "derive" ] }
-color-eyre = { version = "0.5.11", default-features = false }
+color-eyre = { version = "0.6.0", default-features = false }
 regex = "1.5.4"
 ureq = "2.4.0"
 
