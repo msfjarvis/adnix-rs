@@ -55,8 +55,8 @@ fn parse_sources_config_file(filepath: &str) -> HashMap<String, Source> {
     if let Ok(file) = File::open(filepath) {
         BufReader::new(file)
             .lines()
-            .filter(|result| result.is_ok())
-            .map(|result| result.unwrap())
+            .filter(std::result::Result::is_ok)
+            .map(std::result::Result::unwrap)
             .for_each(|line| {
                 let vec: Vec<&str> = line.split('|').collect();
                 list.insert(

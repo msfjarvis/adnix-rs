@@ -13,16 +13,16 @@ impl Source {
 
     pub fn format_to_dnsmasq(&self, ipv4_addr: &str, ipv6_addr: &str) -> Vec<String> {
         let raw_hosts = self.download_to_string().unwrap();
-        formatters::format_to_dnsmasq(raw_hosts, ipv4_addr, ipv6_addr)
+        formatters::format_to_dnsmasq(&raw_hosts, ipv4_addr, ipv6_addr)
     }
 
     pub fn format_to_dnsmasq_server(&self) -> Vec<String> {
         let raw_hosts = self.download_to_string().unwrap();
-        formatters::format_to_dnsmasq_server(raw_hosts)
+        formatters::format_to_dnsmasq_server(&raw_hosts)
     }
 
     pub fn format_to_unbound(&self, ipv4_addr: &str, ipv6_addr: &str) -> Vec<String> {
         let raw_hosts = self.download_to_string().unwrap();
-        formatters::format_to_unbound(raw_hosts, ipv4_addr, ipv6_addr)
+        formatters::format_to_unbound(&raw_hosts, ipv4_addr, ipv6_addr)
     }
 }

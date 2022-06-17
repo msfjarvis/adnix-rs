@@ -9,7 +9,7 @@ const LOCALHOST_ADDRS: &[&str] = &[
     "broadcasthost",
 ];
 
-pub fn format_to_unbound(raw_hosts: String, ipv4_addr: &str, ipv6_addr: &str) -> Vec<String> {
+pub fn format_to_unbound(raw_hosts: &str, ipv4_addr: &str, ipv6_addr: &str) -> Vec<String> {
     let mut output: Vec<String> = vec![String::from("server:")];
     let re = Regex::new(REGEX_PATTERN).unwrap();
     for line in raw_hosts.lines() {
@@ -27,7 +27,7 @@ pub fn format_to_unbound(raw_hosts: String, ipv4_addr: &str, ipv6_addr: &str) ->
     output
 }
 
-pub fn format_to_dnsmasq_server(raw_hosts: String) -> Vec<String> {
+pub fn format_to_dnsmasq_server(raw_hosts: &str) -> Vec<String> {
     let mut output: Vec<String> = vec![];
     let re = Regex::new(REGEX_PATTERN).unwrap();
     for line in raw_hosts.lines() {
@@ -43,7 +43,7 @@ pub fn format_to_dnsmasq_server(raw_hosts: String) -> Vec<String> {
     output
 }
 
-pub fn format_to_dnsmasq(raw_hosts: String, ipv4_addr: &str, ipv6_addr: &str) -> Vec<String> {
+pub fn format_to_dnsmasq(raw_hosts: &str, ipv4_addr: &str, ipv6_addr: &str) -> Vec<String> {
     let mut output: Vec<String> = vec![];
     let re = Regex::new(REGEX_PATTERN).unwrap();
     for line in raw_hosts.lines() {
@@ -69,7 +69,7 @@ mod tests {
 
     #[test]
     fn test_dnsmasq_formatter() {
-        let results = format_to_dnsmasq(emit_hosts_file(), "127.0.0.1", "::1");
+        let results = format_to_dnsmasq(&emit_hosts_file(), "127.0.0.1", "::1");
         assert!(results.contains(&String::from("address=/adserver.abv.bg/127.0.0.1")));
         assert!(results.contains(&String::from("address=/adserver.abv.bg/::1")));
         assert!(!results.contains(&String::from("# Leading comment test 0.0.0.0 fr.a2dfp.net")));
@@ -79,7 +79,7 @@ mod tests {
 
     #[test]
     fn test_dnsmasq_server_formatter() {
-        let results = format_to_dnsmasq_server(emit_hosts_file());
+        let results = format_to_dnsmasq_server(&emit_hosts_file());
         assert!(results.contains(&String::from("server=/adserver.abv.bg/")));
         assert!(results.contains(&String::from("server=/adserver.abv.bg/")));
         assert!(!results.contains(&String::from("# Leading comment test 0.0.0.0 fr.a2dfp.net")));
@@ -89,7 +89,7 @@ mod tests {
 
     #[test]
     fn test_unbound_formatter() {
-        let results = format_to_unbound(emit_hosts_file(), "127.0.0.1", "::1");
+        let results = format_to_unbound(&emit_hosts_file(), "127.0.0.1", "::1");
         assert!(results.contains(&String::from("  local-zone: adserver.abv.bg A 127.0.0.1")));
         assert!(results.contains(&String::from("  local-zone: adserver.abv.bg AAAA ::1")));
         assert!(!results.contains(&String::from(
