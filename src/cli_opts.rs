@@ -1,4 +1,4 @@
-use clap::{ArgEnum, Parser};
+use clap::{Parser, ValueEnum};
 
 #[derive(Debug, Parser)]
 #[clap(
@@ -8,27 +8,27 @@ use clap::{ArgEnum, Parser};
 )]
 pub(crate) struct Opts {
     /// Output file
-    #[clap(long, short)]
+    #[clap(long, short, action)]
     pub(crate) output: Option<String>,
 
     /// Formatter
-    #[clap(arg_enum, long, short, default_value = "dnsmasq")]
+    #[clap(value_enum, long, short, default_value_t = FormatterOpt::Dnsmasq, action)]
     pub(crate) formatter: FormatterOpt,
 
     /// IPv4 address
-    #[clap(long = "address", default_value = "127.0.0.1")]
+    #[clap(long = "address", default_value = "127.0.0.1", action)]
     pub(crate) ipv4_address: String,
 
     /// IPv6 address
-    #[clap(long = "v6address", default_value = "::1")]
+    #[clap(long = "v6address", default_value = "::1", action)]
     pub(crate) ipv6_address: String,
 
     /// File to read "name|source url" mappings from
-    #[clap(long, short)]
+    #[clap(long, short, action)]
     pub(crate) sources_file: String,
 }
 
-#[derive(ArgEnum, Clone, Debug, Parser)]
+#[derive(ValueEnum, Clone, Debug)]
 pub(crate) enum FormatterOpt {
     Dnsmasq,
     DnsmasqServer,
