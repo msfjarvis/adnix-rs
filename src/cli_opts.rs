@@ -34,3 +34,13 @@ pub(crate) enum FormatterOpt {
     DnsmasqServer,
     Unbound,
 }
+
+#[cfg(test)]
+mod test {
+    use super::Opts;
+
+    #[test]
+    fn cli_assert() {
+        <Opts as clap::CommandFactory>::command().debug_assert()
+    }
+}
