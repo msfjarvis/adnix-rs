@@ -1,4 +1,4 @@
-# adnix-rs [![Check Rust code](https://github.com/msfjarvis/adnix-rs/actions/workflows/test.yml/badge.svg)](https://github.com/msfjarvis/adnix-rs/actions/workflows/test.yml) [![Version info](https://img.shields.io/crates/v/adnix.svg)](https://crates.io/crates/adnix) [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+# adnix-rs [![Version info](https://img.shields.io/crates/v/adnix.svg)](https://crates.io/crates/adnix) [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 Rust reimplementation of [sniner/adnix](https://github.com/sniner/adnix) for educational purposes.
 
