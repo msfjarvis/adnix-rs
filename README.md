@@ -1,4 +1,4 @@
-# adnix-rs [![Version info](https://img.shields.io/crates/v/adnix.svg)](https://crates.io/crates/adnix) [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+# adnix-rs [![Version info](https://img.shields.io/crates/v/adnix.svg)](https://crates.io/crates/adnix) [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/) [![Built with Garnix](https://img.shields.io/static/v1?label=Built%20with&message=Garnix&color=blue&style=flat&logo=nixos&link=https://garnix.io&labelColor=111212)](https://garnix.io)
 
 Rust reimplementation of [sniner/adnix](https://github.com/sniner/adnix) for educational purposes.
 
