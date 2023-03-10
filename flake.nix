@@ -53,25 +53,32 @@
       rustStable =
         pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
       craneLib = (crane.mkLib pkgs).overrideToolchain rustStable;
-      src = ./.;
-      cargoArtifacts = craneLib.buildDepsOnly {inherit src buildInputs;};
-      buildInputs = [];
-
-      adnix = craneLib.buildPackage {
-        inherit src;
-        doCheck = false;
-      };
-      adnix-clippy = craneLib.cargoClippy {
-        inherit cargoArtifacts src buildInputs;
+      commonArgs = {
+        src = craneLib.cleanCargoSource ./.;
+        buildInputs = [];
+        nativeBuildInputs = [];
         cargoClippyExtraArgs = "--all-targets -- --deny warnings";
       };
-      adnix-fmt = craneLib.cargoFmt {inherit src;};
-      adnix-audit = craneLib.cargoAudit {inherit src advisory-db;};
-      adnix-nextest = craneLib.cargoNextest {
-        inherit cargoArtifacts src buildInputs;
-        partitions = 1;
-        partitionType = "count";
-      };
+
+      cargoArtifacts = craneLib.buildDepsOnly (commonArgs // {doCheck = false;});
+
+      adnix = craneLib.buildPackage (commonArgs
+        // {
+          doCheck = false;
+        });
+      adnix-clippy = craneLib.cargoClippy (commonArgs
+        // {
+          inherit cargoArtifacts;
+        });
+      adnix-fmt = craneLib.cargoFmt (commonArgs // {});
+      adnix-audit = craneLib.cargoAudit (commonArgs // {inherit advisory-db;});
+      adnix-nextest = craneLib.cargoNextest (commonArgs
+        // {
+          inherit cargoArtifacts;
+          src = ./.;
+          partitions = 1;
+          partitionType = "count";
+        });
     in {
       checks = {
         inherit adnix adnix-audit adnix-clippy adnix-fmt adnix-nextest;
