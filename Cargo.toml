@@ -8,7 +8,7 @@ license = "MIT"
 homepage = "https://github.com/msfjarvis/adnix-rs"
 repository = "https://github.com/msfjarvis/adnix-rs"
 readme = "README.md"
-include = ["src/**/*", "README.md"]
+include = ["src/**/*", "/README.md"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
