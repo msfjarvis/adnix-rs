@@ -17,8 +17,8 @@ set -u
 # FIXME: patch in the repo's URL for suggesting filling an issue
 # REPO="{{REPO_URL}}"
 APP_NAME="adnix"
-APP_VERSION="0.4.5"
-ARTIFACT_DOWNLOAD_URL="https://github.com/msfjarvis/adnix-rs/releases/download/v0.4.5"
+APP_VERSION="0.4.6"
+ARTIFACT_DOWNLOAD_URL="https://github.com/msfjarvis/adnix-rs/releases/download/v0.4.6"
 
 download_binary_and_run_installer() {
     downloader --check

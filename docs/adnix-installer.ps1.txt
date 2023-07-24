@@ -14,9 +14,9 @@ param (
     [Parameter(HelpMessage = 'The name of the App')]
     [string]$app_name = 'adnix',
     [Parameter(HelpMessage = 'The version of the App')]
-    [string]$app_version = '0.4.5',
+    [string]$app_version = '0.4.6',
     [Parameter(HelpMessage = 'The URL of the directory where artifacts can be fetched from')]
-    [string]$artifact_download_url = 'https://github.com/msfjarvis/adnix-rs/releases/download/v0.4.5'
+    [string]$artifact_download_url = 'https://github.com/msfjarvis/adnix-rs/releases/download/v0.4.6'
 )
 
 function Install-Binary($install_args) {
