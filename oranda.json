@@ -1,0 +1,14 @@
+{
+  "build": {
+    "path_prefix": "adnix-rs",
+    "dist_dir": "./docs"
+  },
+  "components": {
+    "artifacts": {
+      "cargo_dist": true,
+      "package_managers": {
+        "nix flakes": "nix profile install github:msfjarvis/adnix"
+      }
+    }
+  }
+}
