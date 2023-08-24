@@ -100,7 +100,7 @@
         ];
 
         packages = with pkgs; [
-          cargo-dist
+          cargo-dist-unstable
           cargo-nextest
           cargo-release
           rustStable
