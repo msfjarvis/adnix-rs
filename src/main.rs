@@ -40,12 +40,12 @@ fn main() -> Result<()> {
     if let Some(val) = opts.output {
         let write_file = File::create(val).unwrap();
         let mut writer = BufWriter::new(&write_file);
-        match write!(&mut writer, "{}", contents) {
+        match write!(&mut writer, "{contents}") {
             Ok(_) => {}
-            Err(e) => eprintln!("{}", e),
+            Err(e) => eprintln!("{e}"),
         };
     } else {
-        println!("{}", contents);
+        println!("{contents}");
     };
     Ok(())
 }
@@ -67,7 +67,7 @@ fn parse_sources_config_file(filepath: &str) -> HashMap<String, Source> {
                 );
             });
     } else {
-        eprintln!("Problem opening file: {}", filepath);
+        eprintln!("Problem opening file: {filepath}");
     };
     list
 }
