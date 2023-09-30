@@ -16,7 +16,7 @@ include = ["src/**/*", "/README.md"]
 clap = { version = "4.4.6", features = ["color", "deprecated", "derive"] }
 color-eyre = { version = "0.6.2", default-features = false }
 regex = "1.9.6"
-ureq = "2.7.1"
+ureq = "2.8.0"
 
 [profile.release]
 codegen-units = 1
