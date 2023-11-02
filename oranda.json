@@ -1,13 +1,19 @@
 {
   "build": {
-    "path_prefix": "adnix-rs",
-    "dist_dir": "./docs"
+    "path_prefix": "adnix-rs"
   },
   "components": {
+    "changelog": false,
     "artifacts": {
-      "cargo_dist": true,
+      "auto": true,
       "package_managers": {
-        "nix flakes": "nix profile install github:msfjarvis/adnix"
+        "preferred": {
+          "nix flake": "nix profile install github:msfjarvis/adnix-rs",
+          "cargo": "cargo install adnix --locked --profile=dist"
+        },
+        "additional": {
+          "binstall": "cargo binstall adnix"
+        }
       }
     }
   }

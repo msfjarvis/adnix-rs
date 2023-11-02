@@ -30,7 +30,7 @@ OPTIONS:
 
 Sample sources file for use with adnix.
 
-```plaintext
+```
 Yoyo|http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext
 Malware Domain List|http://www.malwaredomainlist.com/hostslist/hosts.txt
 ```
