@@ -95,8 +95,9 @@
           cargo-dist
           cargo-nextest
           cargo-release
-          rustStable
           oranda
+          rustStable
+          stdenv.cc
         ];
       };
     });
