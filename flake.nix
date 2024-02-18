@@ -74,7 +74,9 @@
         });
     in {
       checks = {
-        inherit adnix adnix-audit adnix-clippy adnix-fmt adnix-nextest;
+        inherit adnix adnix-clippy adnix-fmt adnix-nextest;
+        # TODO: Re-enable once https://github.com/NixOS/nixpkgs/issues/288064 is fixed
+        # inherit adnix-audit;
       };
 
       packages.default = adnix;
