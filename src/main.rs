@@ -41,7 +41,7 @@ fn main() -> Result<()> {
         let write_file = File::create(val).unwrap();
         let mut writer = BufWriter::new(&write_file);
         match write!(&mut writer, "{contents}") {
-            Ok(_) => {}
+            Ok(()) => {}
             Err(e) => eprintln!("{e}"),
         };
     } else {
@@ -55,8 +55,7 @@ fn parse_sources_config_file(filepath: &str) -> HashMap<String, Source> {
     if let Ok(file) = File::open(filepath) {
         BufReader::new(file)
             .lines()
-            .filter(std::result::Result::is_ok)
-            .map(std::result::Result::unwrap)
+            .map_while(Result::ok)
             .for_each(|line| {
                 let vec: Vec<&str> = line.split('|').collect();
                 list.insert(
