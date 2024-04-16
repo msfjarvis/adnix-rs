@@ -1,4 +1,7 @@
 {
+  "project": {
+    "name": "adnix-rs"
+  },
   "build": {
     "path_prefix": "adnix-rs"
   },
