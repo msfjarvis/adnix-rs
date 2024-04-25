@@ -22,7 +22,7 @@ eula = false
 clap = { version = "4.5.4", features = ["color", "deprecated", "derive"] }
 color-eyre = { version = "0.6.3", default-features = false }
 regex = "1.10.4"
-ureq = "2.9.6"
+ureq = "2.9.7"
 
 [profile.release]
 codegen-units = 1
