@@ -95,6 +95,7 @@
           cargo-dist
           cargo-nextest
           cargo-release
+          fenix.packages.${system}.rust-analyzer
           oranda
           rustStable
           stdenv.cc
