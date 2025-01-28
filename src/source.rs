@@ -8,7 +8,10 @@ pub struct Source {
 
 impl Source {
     pub fn download_to_string(&self) -> Result<String> {
-        Ok(ureq::get(self.url.as_str()).call()?.into_string()?)
+        Ok(ureq::get(self.url.as_str())
+            .call()?
+            .body_mut()
+            .read_to_string()?)
     }
 
     pub fn format_to_dnsmasq(&self, ipv4_addr: &str, ipv6_addr: &str) -> Vec<String> {
