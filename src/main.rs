@@ -43,10 +43,10 @@ fn main() -> Result<()> {
         match write!(&mut writer, "{contents}") {
             Ok(()) => {}
             Err(e) => eprintln!("{e}"),
-        };
+        }
     } else {
         println!("{contents}");
-    };
+    }
     Ok(())
 }
 
@@ -67,7 +67,7 @@ fn parse_sources_config_file(filepath: &str) -> HashMap<String, Source> {
             });
     } else {
         eprintln!("Problem opening file: {filepath}");
-    };
+    }
     list
 }
 
